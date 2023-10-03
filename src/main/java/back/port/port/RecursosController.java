@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/cv")
@@ -19,7 +21,10 @@ public class RecursosController {
     @GetMapping("")
     public ResponseEntity<FileSystemResource> downloadPdf() throws IOException {
 
-        String relativePath = "static/CV2023.pdf";
+
+        String relativePath = "resources/static/CV2023.pdf";
+
+        /*
         Resource resource = new ClassPathResource(relativePath);
         String absolutePath = resource.getFile().getAbsolutePath();
 
@@ -34,6 +39,21 @@ public class RecursosController {
                 .headers(headers)
                 .contentLength(pdfFile.contentLength())
                 .body(pdfFile);
+         */
+        try {
+            // Cargar el archivo desde el classpath
+            FileSystemResource resource = new FileSystemResource(new ClassPathResource(relativePath).getFile());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "archivo.pdf");
+            // Configurar la respuesta con el archivo PDF
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
-
 }
