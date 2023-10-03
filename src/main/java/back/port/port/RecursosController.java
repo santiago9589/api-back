@@ -22,7 +22,7 @@ public class RecursosController {
     public ResponseEntity<FileSystemResource> downloadPdf() throws IOException {
 
 
-        String relativePath = "resources/static/CV2023.pdf";
+        String relativePath = "static/CV2023.pdf";
 
         /*
         Resource resource = new ClassPathResource(relativePath);
