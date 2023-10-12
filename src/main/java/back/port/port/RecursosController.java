@@ -22,33 +22,9 @@ public class RecursosController {
     @GetMapping("")
     public ResponseEntity<byte[]> downloadPdf() throws IOException {
 
-
         String relativePath = "static/CV2023.pdf";
 
-        /*
-        Resource resource = new ClassPathResource(relativePath);
-        String absolutePath = resource.getFile().getAbsolutePath();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "archivo.pdf");
-
-
-        FileSystemResource pdfFile = new FileSystemResource(absolutePath);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentLength(pdfFile.contentLength())
-                .body(pdfFile);
-         */
         try {
-            // Cargar el archivo desde el classpath
-            /*
-            FileSystemResource resource = new FileSystemResource(new ClassPathResource(relativePath).getFile());
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("attachment", "archivo.pdf");
-            */
 
             Resource resource = new ClassPathResource(relativePath);
             HttpHeaders headers = new HttpHeaders();
@@ -57,7 +33,6 @@ public class RecursosController {
             InputStream inputStream = resource.getInputStream();
             byte[] contenido = inputStream.readAllBytes();
 
-            // Configurar la respuesta con el archivo PDF
             return ResponseEntity
                     .ok()
                     .headers(headers)
